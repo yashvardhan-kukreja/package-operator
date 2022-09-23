@@ -7,6 +7,7 @@ containing basic building blocks that other auxiliary APIs can build on top of.
 * [ClusterObjectSetPhase](#clusterobjectsetphase)
 * [ObjectSet](#objectset)
 * [ObjectSetPhase](#objectsetphase)
+* [PackageManifest](#packagemanifest)
 
 
 ### ClusterObjectSet
@@ -243,6 +244,35 @@ status:
 | `status` <br><a href="#objectsetphasestatus">ObjectSetPhaseStatus</a> | ObjectSetPhaseStatus defines the observed state of a ObjectSetPhase. |
 
 
+### PackageManifest
+
+
+
+
+**Example**
+
+```yaml
+apiVersion: package-operator.run/v1alpha1
+kind: PackageManifest
+metadata:
+  name: example
+  namespace: default
+spec:
+  packageImage: sed
+  targetNamespace: diam
+status:
+  phase: Pending
+
+```
+
+
+| Field | Description |
+| ----- | ----------- |
+| `metadata` <br>metav1.ObjectMeta |  |
+| `spec` <br><a href="#packagemanifestspec">PackageManifestSpec</a> | PackageManifest specification. |
+| `status` <br><a href="#packagemanifeststatus">PackageManifestStatus</a> | PackageManifestStatus defines the observed state of a PackageManifest. |
+
+
 
 
 ---
@@ -419,6 +449,34 @@ ObjectSet reconcile phase.
 Used in:
 * [ClusterObjectSetSpec](#clusterobjectsetspec)
 * [ObjectSetSpec](#objectsetspec)
+
+
+### PackageManifestSpec
+
+PackageManifest specification.
+
+| Field | Description |
+| ----- | ----------- |
+| `packageImage` <b>required</b><br>string | the image digests corresponding to the image containing the contents of the package<br>this image will be unpacked by the package-loader to render the ObjectDeployment for propagating the installation of the package. |
+| `targetNamespace` <b>required</b><br>string | the namespace where the package intends to get installed |
+
+
+Used in:
+* [PackageManifest](#packagemanifest)
+
+
+### PackageManifestStatus
+
+PackageManifestStatus defines the observed state of a PackageManifest.
+
+| Field | Description |
+| ----- | ----------- |
+| `conditions` <br>[]metav1.Condition | Conditions is a list of status conditions ths object is in. |
+| `phase` <br><a href="#packagemanifeststatusphase">PackageManifestStatusPhase</a> | This field is not part of any API contract<br>it will go away as soon as kubectl can print conditions!<br>When evaluating object state in code, use .Conditions instead. |
+
+
+Used in:
+* [PackageManifest](#packagemanifest)
 
 
 ### PackageProbeKindSpec
